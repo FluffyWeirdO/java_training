@@ -1,8 +1,5 @@
 package ru.stqa.pft.sandbox;
 
-/**
- * Created by FluffyWeirdO on 21/05/16.
- */
 public class Rectangle {
 
     public double a;
