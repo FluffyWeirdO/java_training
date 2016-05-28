@@ -11,13 +11,13 @@ import org.openqa.selenium.*;
 
 public class ContactCreationTests {
     FirefoxDriver wd;
-    
+
     @BeforeMethod
     public void setUp() throws Exception {
         wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     }
-    
+
     @Test
     public void testContactCreation() {
         login();
@@ -81,7 +81,7 @@ public class ContactCreationTests {
     public void tearDown() {
         wd.quit();
     }
-    
+
     public static boolean isAlertPresent(FirefoxDriver wd) {
         try {
             wd.switchTo().alert();
