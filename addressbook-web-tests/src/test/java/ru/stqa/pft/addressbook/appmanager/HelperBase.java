@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class HelperBase {
 
@@ -29,5 +30,9 @@ public class HelperBase {
         } catch (NoAlertPresentException e) {
             return false;
         }
+    }
+
+    public void selectFromDropDownList(By selectLocator, String optionText) {
+        new Select(wd.findElement(selectLocator)).selectByVisibleText(optionText);
     }
 }

@@ -24,6 +24,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("company"), contactData.getCompany());
         type(By.name("address"), contactData.getAddress());
         type(By.name("home"), contactData.getPhone());
+        setBirthday(contactData);
     }
 
     public void selectContact() {
@@ -50,5 +51,11 @@ public class ContactHelper extends HelperBase {
     public int checkContactCount() {
         WebElement count = wd.findElement(By.id("search_count"));
         return Integer.valueOf(count.getText());
+    }
+
+    public void setBirthday(ContactData contactData) {
+        selectFromDropDownList(By.name("bday"), contactData.getBirthDate());
+        selectFromDropDownList(By.name("bmonth"), contactData.getBirthMonth());
+        type(By.name("byear"), contactData.getBirthYear());
     }
 }

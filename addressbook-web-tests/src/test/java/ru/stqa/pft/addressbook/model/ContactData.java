@@ -9,9 +9,13 @@ public class ContactData {
     private final String company;
     private final String address;
     private final String phone;
+    private final String birthDate;
+    private final String birthMonth;
+    private final String birthYear;
 
     public ContactData(String firstName, String middleName, String lastName, String nickname, String title,
-                       String company, String address, String phone) {
+                       String company, String address, String phone, String birthDate, String birthMonth,
+                       String birthYear) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -20,6 +24,9 @@ public class ContactData {
         this.company = company;
         this.address = address;
         this.phone = phone;
+        this.birthDate = birthDate;
+        this.birthMonth = birthMonth;
+        this.birthYear = birthYear;
     }
 
     public String getFirstName() {
@@ -52,5 +59,17 @@ public class ContactData {
 
     public String getPhone() {
         return phone;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public String getBirthMonth() {
+        return birthMonth;
+    }
+
+    public String getBirthYear() {
+        return birthYear;
     }
 }
