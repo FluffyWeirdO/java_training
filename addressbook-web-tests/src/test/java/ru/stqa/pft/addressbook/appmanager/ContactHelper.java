@@ -62,4 +62,21 @@ public class ContactHelper extends HelperBase {
         selectFromDropDownList(By.name("bmonth"), contactData.getBirthMonth());
         type(By.name("byear"), contactData.getBirthYear());
     }
+
+    public void returnToHomePage() {
+        if (isElementPresent(By.id("maintable"))) {
+            return;
+        }
+        click(By.linkText("home page"));
+    }
+
+    public void createContact(ContactData contactData, boolean creation) {
+        fillContactForm(contactData, creation);
+        submitContactCreation();
+        returnToHomePage();
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
+    }
 }
