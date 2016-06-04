@@ -12,6 +12,6 @@ public class ContactModificationTests extends TestBase {
                 "UpdatedNick", "UpdatedTitle", "UpdatedCompany", "UpdatedAddress", "UpdatedPhone", "28", "May", "2016",
                 null), false);
         app.getContactHelper().submitContactModification();
-        app.getContactHelper().returnToHomePage();
+        app.getNavigationHelper().gotoHomePage();
     }
 }
