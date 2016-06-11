@@ -1,10 +1,9 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HelperBase {
 
@@ -49,5 +48,11 @@ public class HelperBase {
         } catch (NoSuchElementException ex) {
             return false;
         }
+    }
+
+    public void waitForPageRefresh(By locator) {
+        WebDriverWait wait = new WebDriverWait(wd, 10);
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(locator));
     }
 }

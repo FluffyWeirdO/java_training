@@ -50,6 +50,7 @@ public class ContactHelper extends HelperBase {
     public void deleteContact() {
         click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
         wd.switchTo().alert().accept();
+        waitForPageRefresh(By.id("maintable"));
     }
 
     public int checkContactCount() {
@@ -78,5 +79,9 @@ public class ContactHelper extends HelperBase {
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public int getContactCount() {
+        return wd.findElements(By.name("selected[]")).size();
     }
 }

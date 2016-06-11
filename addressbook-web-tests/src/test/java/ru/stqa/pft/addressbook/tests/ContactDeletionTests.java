@@ -13,10 +13,10 @@ public class ContactDeletionTests extends TestBase {
                     "TestNickname", "Mr", "TestCompany", "TestAddress1", "+380634759784", "10", "January", "1988",
                     "TestGroup"));
         }
-        int countBefore = app.getContactHelper().checkContactCount();
+        int countBefore = app.getContactHelper().getContactCount();
         app.getContactHelper().selectContact();
         app.getContactHelper().deleteContact();
-        int countAfter = app.getContactHelper().checkContactCount();
-        Assert.assertTrue(countAfter < countBefore);
+        int countAfter = app.getContactHelper().getContactCount();
+        Assert.assertEquals(countAfter, countBefore - 1);
     }
 }
