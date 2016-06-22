@@ -29,7 +29,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("company"), contactData.getCompany());
         type(By.name("address"), contactData.getAddress());
         type(By.name("home"), contactData.getPhone());
-        setBirthday(contactData);
+        setBirthday(contactData.getBirthDate(), contactData.getBirthMonth(), contactData.getBirthYear());
         if (creation) {
             new Select(wd.findElement(By.name("new_group"))).selectByIndex(1);
         } else {
@@ -74,10 +74,10 @@ public class ContactHelper extends HelperBase {
         return Integer.valueOf(count.getText());
     }
 
-    public void setBirthday(ContactData contactData) {
-        selectFromDropDownList(By.name("bday"), contactData.getBirthDate());
-        selectFromDropDownList(By.name("bmonth"), contactData.getBirthMonth());
-        type(By.name("byear"), contactData.getBirthYear());
+    public void setBirthday(String birthDate, String birthMonth, String birthYear) {
+        selectFromDropDownList(By.name("bday"), birthDate);
+        selectFromDropDownList(By.name("bmonth"), birthMonth);
+        type(By.name("byear"), birthYear);
     }
 
     public void returnToHomePage() {
@@ -106,8 +106,7 @@ public class ContactHelper extends HelperBase {
             String firstName = cells.get(2).getText();
 
             int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData contact = new ContactData(id, firstName, null, lastName, null, null, null, null, null, null, null, null, null);
-            contacts.add(contact);
+            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
         return contacts;
     }

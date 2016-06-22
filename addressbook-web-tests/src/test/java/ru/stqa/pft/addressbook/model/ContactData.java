@@ -1,55 +1,19 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
-    private int id;
-    private final String firstName;
-    private final String middleName;
-    private final String lastName;
-    private final String nickname;
-    private final String title;
-    private final String company;
-    private final String address;
-    private final String phone;
-    private final String birthDate;
-    private final String birthMonth;
-    private final String birthYear;
+    private int id = Integer.MAX_VALUE;
+    private String firstName;
+    private String middleName;
+    private String lastName;
+    private String nickname;
+    private String title;
+    private String company;
+    private String address;
+    private String phone;
+    private String birthDate;
+    private String birthMonth;
+    private String birthYear;
     private String group;
-
-    public ContactData(int id, String firstName, String middleName, String lastName, String nickname, String title,
-                       String company, String address, String phone, String birthDate, String birthMonth,
-                       String birthYear, String group) {
-        this.id = id;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.nickname = nickname;
-        this.title = title;
-        this.company = company;
-        this.address = address;
-        this.phone = phone;
-        this.birthDate = birthDate;
-        this.birthMonth = birthMonth;
-        this.birthYear = birthYear;
-        this.group = group;
-    }
-
-    public ContactData(String firstName, String middleName, String lastName, String nickname, String title,
-                       String company, String address, String phone, String birthDate, String birthMonth,
-                       String birthYear, String group) {
-        this.id = Integer.MAX_VALUE;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.nickname = nickname;
-        this.title = title;
-        this.company = company;
-        this.address = address;
-        this.phone = phone;
-        this.birthDate = birthDate;
-        this.birthMonth = birthMonth;
-        this.birthYear = birthYear;
-        this.group = group;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -103,8 +67,69 @@ public class ContactData {
         return id;
     }
 
-    public void setId(int id) {
+    public ContactData withId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public ContactData withFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public ContactData withMiddleName(String middleName) {
+        this.middleName = middleName;
+        return this;
+    }
+
+    public ContactData withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public ContactData withNickname(String nickname) {
+        this.nickname = nickname;
+        return this;
+    }
+
+    public ContactData withTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public ContactData withCompany(String company) {
+        this.company = company;
+        return this;
+    }
+
+    public ContactData withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public ContactData withPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public ContactData withBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+        return this;
+    }
+
+    public ContactData withBirthMonth(String birthMonth) {
+        this.birthMonth = birthMonth;
+        return this;
+    }
+
+    public ContactData withBirthYear(String birthYear) {
+        this.birthYear = birthYear;
+        return this;
+    }
+
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
     }
 
     @Override

@@ -1,50 +1,52 @@
 package ru.stqa.pft.addressbook.model;
 
 public class GroupData {
-    private int id;
-    private final String groupName;
-    private final String groupHeader;
-    private final String groupFooter;
-
-    public GroupData(int id, String groupName, String groupHeader, String groupFooter) {
-        this.id = id;
-        this.groupName = groupName;
-        this.groupHeader = groupHeader;
-        this.groupFooter = groupFooter;
-    }
-
-    public GroupData(String groupName, String groupHeader, String groupFooter) {
-        this.id = Integer.MAX_VALUE;
-        this.groupName = groupName;
-        this.groupHeader = groupHeader;
-        this.groupFooter = groupFooter;
-    }
+    private int id = Integer.MAX_VALUE;
+    private String name;
+    private String header;
+    private String footer;
 
     public int getId() {
         return id;
     }
 
     public String getGroupName() {
-        return groupName;
+        return name;
     }
 
     public String getGroupHeader() {
-        return groupHeader;
+        return header;
     }
 
     public String getGroupFooter() {
-        return groupFooter;
+        return footer;
     }
 
-    public void setId(int id) {
+    public GroupData withId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public GroupData withName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public GroupData withHeader(String header) {
+        this.header = header;
+        return this;
+    }
+
+    public GroupData withFooter(String footer) {
+        this.footer = footer;
+        return this;
     }
 
     @Override
     public String toString() {
         return "GroupData{" +
                 "id='" + id + '\'' +
-                ", groupName='" + groupName + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 
@@ -55,13 +57,13 @@ public class GroupData {
 
         GroupData groupData = (GroupData) o;
 
-        return groupName != null ? groupName.equals(groupData.groupName) : groupData.groupName == null;
+        return name != null ? name.equals(groupData.name) : groupData.name == null;
 
     }
 
     @Override
     public int hashCode() {
-        return groupName != null ? groupName.hashCode() : 0;
+        return name != null ? name.hashCode() : 0;
     }
 
 
