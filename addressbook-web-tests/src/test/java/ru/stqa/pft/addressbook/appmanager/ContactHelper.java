@@ -7,8 +7,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -37,12 +38,12 @@ public class ContactHelper extends HelperBase {
         }
     }
 
-    public void select(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    public void selectById(int id) {
+        click(By.xpath(".//*[@id='" + id + "']"));
     }
 
-    public void initContactModification(int index) {
-        click(By.xpath(".//*[@id='maintable']/tbody/tr[" + (index + 2) + "]/td[8]/a/img"));
+    public void initContactModificationById(int id) {
+        click(By.cssSelector("a[href='edit.php?id=" + id + "']"));
     }
 
     public void submitContactModification() {
@@ -55,24 +56,20 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public void modify(int index, ContactData contact) {
-        initContactModification(index);
+    public void modify(ContactData contact) {
+        initContactModificationById(contact.getId());
         fillContactForm(contact, false);
         submitContactModification();
         returnToHomePage();
     }
 
-    public void delete(int index) {
-        select(index);
+    public void delete(ContactData contact) {
+        selectById(contact.getId());
         click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
         wd.switchTo().alert().accept();
         waitForPageRefresh(By.id("maintable"));
     }
 
-    public int checkContactCount() {
-        WebElement count = wd.findElement(By.id("search_count"));
-        return Integer.valueOf(count.getText());
-    }
 
     public void setBirthday(String birthDate, String birthMonth, String birthYear) {
         selectFromDropDownList(By.name("bday"), birthDate);
@@ -87,7 +84,6 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("home page"));
     }
 
-
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
@@ -96,8 +92,13 @@ public class ContactHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<ContactData>();
+    public int checkContactCountLabel() {
+        WebElement count = wd.findElement(By.id("search_count"));
+        return Integer.valueOf(count.getText());
+    }
+
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<>();
 
         List<WebElement> rows = wd.findElements(By.name("entry"));
         for (WebElement row : rows) {
