@@ -3,7 +3,6 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
@@ -38,7 +37,8 @@ public class ContactHelper extends HelperBase {
             setBirthday(contactData.getBirthDate(), contactData.getBirthMonth(), contactData.getBirthYear());
         }
         if (creation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByIndex(1);
+//            new Select(wd.findElement(By.name("new_group"))).selectByIndex(1);
+            Assert.assertTrue(isElementPresent(By.name("new_group")));
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
@@ -145,5 +145,25 @@ public class ContactHelper extends HelperBase {
         wd.navigate().back();
         return contact.withFirstName(firstName).withLastName(lastName).withHomePhone(homePhone).withMobilePhone(mobilePhone)
                 .withWorkPhone(workPhone).withAddress(address).withEmail1(email1).withEmail2(email2).withEmail3(email3);
+    }
+
+    public ContactData infoFromDetailsPage(ContactData contact) {
+        initContactDetailsPage(contact.getId());
+        String allDetails = wd.findElement(By.xpath(".//*[@id='content']")).getText();
+        wd.navigate().back();
+        return contact.withAllDetails(allDetails);
+
+    }
+
+    public void initContactDetailsPage(int id) {
+        click(By.cssSelector("a[href='view.php?id=" + id + "']"));
+    }
+
+    public void deleteAll() {
+        click(By.id("MassCB"));
+        click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
+        wd.switchTo().alert().accept();
+        contactCache = null;
+        waitForPageRefresh(By.id("maintable"));
     }
 }

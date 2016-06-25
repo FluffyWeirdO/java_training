@@ -21,6 +21,7 @@ public class ContactData {
     private String email2;
     private String email3;
     private String allEmails;
+    private String allDetails;
 
     public String getFirstName() {
         return firstName;
@@ -101,6 +102,11 @@ public class ContactData {
     public String getAllEmails() {
         return allEmails;
     }
+
+    public String getAllDetails() {
+        return allDetails;
+    }
+
 
     public ContactData withId(int id) {
         this.id = id;
@@ -199,6 +205,11 @@ public class ContactData {
 
     public ContactData withEmail3(String email3) {
         this.email3 = email3;
+        return this;
+    }
+
+    public ContactData withAllDetails(String allDetails) {
+        this.allDetails = allDetails;
         return this;
     }
 
