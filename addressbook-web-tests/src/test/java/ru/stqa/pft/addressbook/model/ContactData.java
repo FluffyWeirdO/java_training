@@ -91,10 +91,10 @@ public class ContactData {
     @Transient
     private String allDetails;
 
-    @Column(name = "photo")
-    @Type(type = "text")
-//    @Transient
-    private String photo;
+    //    @Column(name = "photo")
+//    @Type(type = "text")
+    @Transient
+    private File photo;
 
     public String getFirstName() {
         return firstName;
@@ -181,7 +181,8 @@ public class ContactData {
     }
 
     public File getPhoto() {
-        return new File(photo);
+//        return new File(photo);
+        return photo;
     }
 
 
@@ -291,7 +292,8 @@ public class ContactData {
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo.getPath();
+        this.photo = photo;
+//        this.photo = photo.getPath();
         return this;
     }
 
