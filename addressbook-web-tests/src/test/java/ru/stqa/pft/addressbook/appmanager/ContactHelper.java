@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
@@ -36,11 +37,14 @@ public class ContactHelper extends HelperBase {
         if (contactData.getPhoto() != null) {
             attach(By.name("photo"), contactData.getPhoto());
         }
-        if (contactData.getBirthDate() != null && contactData.getBirthMonth() != null && contactData.getBirthYear() != null) {
-            setBirthday(contactData.getBirthDate(), contactData.getBirthMonth(), contactData.getBirthYear());
+        if (contactData.getBirthDate() != 0 && contactData.getBirthMonth() != null && contactData.getBirthYear() != null) {
+            setBirthday(String.valueOf(contactData.getBirthDate()), contactData.getBirthMonth(), contactData.getBirthYear());
         }
         if (creation) {
-//            new Select(wd.findElement(By.name("new_group"))).selectByIndex(1);
+            if (contactData.getGroups().size() > 0) {
+                Assert.assertTrue(contactData.getGroups().size() == 1);
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getGroupName());
+            }
             Assert.assertTrue(isElementPresent(By.name("new_group")));
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));

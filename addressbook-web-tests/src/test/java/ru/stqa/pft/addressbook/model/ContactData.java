@@ -7,6 +7,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
@@ -19,71 +21,67 @@ public class ContactData {
 
     @Expose
     @Column(name = "firstname")
-    private String firstName;
+    private String firstName = "";
 
     @Column(name = "middlename")
-    private String middleName;
+    private String middleName = "";
 
     @Expose
     @Column(name = "lastname")
-    private String lastName;
+    private String lastName = "";
 
     @Column(name = "nickname")
-    private String nickname;
+    private String nickname = "";
 
     @Column(name = "title")
-    private String title;
+    private String title = "";
 
     @Column(name = "company")
-    private String company;
+    private String company = "";
 
     @Expose
     @Column(name = "address")
     @Type(type = "text")
-    private String address;
+    private String address = "";
 
     @Expose
     @Column(name = "home")
     @Type(type = "text")
-    private String homePhone;
+    private String homePhone = "";
 
     @Expose
     @Column(name = "mobile")
     @Type(type = "text")
-    private String mobilePhone;
+    private String mobilePhone = "";
 
     @Expose
     @Column(name = "work")
     @Type(type = "text")
-    private String workPhone;
+    private String workPhone = "";
 
     @Transient
     private String allPhones;
-    //    @Column(name = "bday")
-    //    @Type(type = "tinyint")
-    @Transient
-    private String birthDate;
+
+    @Column(name = "bday")
+    private byte birthDate = 0;
 
     @Column(name = "bmonth")
-    private String birthMonth;
+    private String birthMonth = "-";
 
     @Column(name = "byear")
-    private String birthYear;
-
-    @Transient
-    private String group;
+    private String birthYear = "";
 
     @Column(name = "email")
     @Type(type = "text")
-    private String email1;
+    private String email1 = "";
 
     @Column(name = "email2")
     @Type(type = "text")
-    private String email2;
+    private String email2 = "";
 
     @Column(name = "email3")
     @Type(type = "text")
-    private String email3;
+    private String email3 = "";
 
     @Transient
     private String allEmails;
@@ -91,10 +89,13 @@ public class ContactData {
     @Transient
     private String allDetails;
 
-    //    @Column(name = "photo")
-//    @Type(type = "text")
     @Transient
     private File photo;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
 
     public String getFirstName() {
         return firstName;
@@ -136,7 +137,7 @@ public class ContactData {
         return workPhone;
     }
 
-    public String getBirthDate() {
+    public byte getBirthDate() {
         return birthDate;
     }
 
@@ -148,8 +149,8 @@ public class ContactData {
         return birthYear;
     }
 
-    public String getGroup() {
-        return group;
+    public Groups getGroups() {
+        return new Groups(groups);
     }
 
     public int getId() {
@@ -227,7 +228,7 @@ public class ContactData {
     }
 
     public ContactData withBirthDate(String birthDate) {
-        this.birthDate = birthDate;
+        this.birthDate = Byte.valueOf(birthDate);
         return this;
     }
 
@@ -238,11 +239,6 @@ public class ContactData {
 
     public ContactData withBirthYear(String birthYear) {
         this.birthYear = birthYear;
-        return this;
-    }
-
-    public ContactData withGroup(String group) {
-        this.group = group;
         return this;
     }
 
@@ -303,7 +299,24 @@ public class ContactData {
         return "ContactData{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", title='" + title + '\'' +
+                ", company='" + company + '\'' +
+                ", address='" + address + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", workPhone='" + workPhone + '\'' +
+                ", allPhones='" + allPhones + '\'' +
+                ", birthDate=" + birthDate +
+                ", birthMonth='" + birthMonth + '\'' +
+                ", birthYear='" + birthYear + '\'' +
+                ", email1='" + email1 + '\'' +
+                ", email2='" + email2 + '\'' +
+                ", email3='" + email3 + '\'' +
+                ", allEmails='" + allEmails + '\'' +
+                ", allDetails='" + allDetails + '\'' +
                 '}';
     }
 
@@ -315,8 +328,22 @@ public class ContactData {
         ContactData that = (ContactData) o;
 
         if (id != that.id) return false;
+        if (birthDate != that.birthDate) return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        return lastName != null ? lastName.equals(that.lastName) : that.lastName == null;
+        if (middleName != null ? !middleName.equals(that.middleName) : that.middleName != null) return false;
+        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (nickname != null ? !nickname.equals(that.nickname) : that.nickname != null) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (company != null ? !company.equals(that.company) : that.company != null) return false;
+        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
+        if (mobilePhone != null ? !mobilePhone.equals(that.mobilePhone) : that.mobilePhone != null) return false;
+        if (workPhone != null ? !workPhone.equals(that.workPhone) : that.workPhone != null) return false;
+        if (birthMonth != null ? !birthMonth.equals(that.birthMonth) : that.birthMonth != null) return false;
+        if (birthYear != null ? !birthYear.equals(that.birthYear) : that.birthYear != null) return false;
+        if (email1 != null ? !email1.equals(that.email1) : that.email1 != null) return false;
+        if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
+        return email3 != null ? email3.equals(that.email3) : that.email3 == null;
 
     }
 
@@ -324,7 +351,21 @@ public class ContactData {
     public int hashCode() {
         int result = id;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (company != null ? company.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
+        result = 31 * result + (mobilePhone != null ? mobilePhone.hashCode() : 0);
+        result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
+        result = 31 * result + (int) birthDate;
+        result = 31 * result + (birthMonth != null ? birthMonth.hashCode() : 0);
+        result = 31 * result + (birthYear != null ? birthYear.hashCode() : 0);
+        result = 31 * result + (email1 != null ? email1.hashCode() : 0);
+        result = 31 * result + (email2 != null ? email2.hashCode() : 0);
+        result = 31 * result + (email3 != null ? email3.hashCode() : 0);
         return result;
     }
 }
