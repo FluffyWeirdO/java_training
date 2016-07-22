@@ -17,10 +17,11 @@ public class ApplicationManager {
 
     private String browser;
     private final Properties properties;
-    private RegistrationHelper registrationHelper;
     private FtpHelper ftp;
     private MailHelper mailHelper;
     private JamesHelper jamesHelper;
+    private MantisHelper mantisHelper;
+    private DbHelper dbHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -44,13 +45,6 @@ public class ApplicationManager {
 
     public String getProperty(String key) {
         return properties.getProperty(key);
-    }
-
-    public RegistrationHelper registration() {
-        if (registrationHelper == null) {
-            registrationHelper = new RegistrationHelper(this);
-        }
-        return registrationHelper;
     }
 
     public FtpHelper ftp() {
@@ -88,5 +82,19 @@ public class ApplicationManager {
             jamesHelper = new JamesHelper(this);
         }
         return jamesHelper;
+    }
+
+    public MantisHelper mantis() {
+        if (mantisHelper == null) {
+            mantisHelper = new MantisHelper(this);
+        }
+        return mantisHelper;
+    }
+
+    public DbHelper db() {
+        if (dbHelper == null) {
+            dbHelper = new DbHelper(this);
+        }
+        return dbHelper;
     }
 }

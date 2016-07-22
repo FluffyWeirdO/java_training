@@ -3,7 +3,6 @@ package ru.stqa.pft.mantis.tests;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantis.model.MailMessage;
 
 import javax.mail.MessagingException;
@@ -24,31 +23,25 @@ public class RegistrationTests extends TestBase {
         String email = String.format("user%s@localhost.localdomain", now);
         String user = String.format("user%s", now);
         String password = "password";
-        app.registration().start(user, email);
+        app.mantis().initiateSignUp(user, email);
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
-        String confirmationLink = findConfirmationLink(mailMessages, email);
-        app.registration().finish(confirmationLink, password);
+        String confirmationURL = app.mail().findURL(mailMessages, email);
+        app.mantis().setNewPassword(confirmationURL, password);
         assertTrue(app.newSession().logIn(user, password));
     }
 
-    //    @Test
+    //@Test
     public void testRegistrationJames() throws IOException, MessagingException {
         long now = System.currentTimeMillis();
         String email = String.format("user%s@localhost.localdomain", now);
         String user = String.format("user%s", now);
         String password = "password";
         app.james().createUser(user, password);
-        app.registration().start(user, email);
+        app.mantis().initiateSignUp(user, email);
         List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000);
-        String confirmationLink = findConfirmationLink(mailMessages, email);
-        app.registration().finish(confirmationLink, password);
+        String confirmationURL = app.mail().findURL(mailMessages, email);
+        app.mantis().setNewPassword(confirmationURL, password);
         assertTrue(app.newSession().logIn(user, password));
-    }
-
-    private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
-        MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findFirst().get();
-        VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
-        return regex.getText(mailMessage.text);
     }
 
     @AfterMethod(alwaysRun = true)
