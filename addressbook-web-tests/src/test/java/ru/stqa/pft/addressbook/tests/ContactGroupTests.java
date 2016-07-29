@@ -64,6 +64,8 @@ public class ContactGroupTests extends TestBase {
         assertThat(contactFromDb.getGroups(), hasItem(targetGroup));
         assertThat(contactFromDb.getGroups(), equalTo(before.withAdded(targetGroup)));
 
+        Groups after = contactFromDb.getGroups();
+        assertThat(after.size(), equalTo(before.size() + 1));
     }
 
     @Test(dependsOnMethods = "testContactAdditionToGroup")
